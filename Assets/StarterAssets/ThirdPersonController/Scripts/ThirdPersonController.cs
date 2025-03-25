@@ -215,20 +215,16 @@ namespace StarterAssets
 
         private void SmoothLookAtCursor()
         {
-            if (_input.look.sqrMagnitude >= 0.01f) // Ensure there's valid mouse movement
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition); // Cast ray from camera to cursor
+
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, GroundLayers)) // Check if it hits the ground
             {
-                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition); // Cast ray from camera to cursor
-                RaycastHit hit;
+                Vector3 lookAtPosition = hit.point; // Get the world position of the mouse
+                lookAtPosition.y = transform.position.y; // Keep player rotation only on the Y-axis
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, GroundLayers)) // Check if it hits the ground
-                {
-                    Vector3 lookAtPosition = hit.point; // Get the world position of the mouse
-                    lookAtPosition.y = transform.position.y; // Keep player rotation only on the Y-axis
-
-                    // Smoothly rotate character towards cursor position
-                    Quaternion targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSmoothTime);
-                }
+                // Smoothly rotate character towards cursor position
+                Quaternion targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSmoothTime);
             }
         }
 
