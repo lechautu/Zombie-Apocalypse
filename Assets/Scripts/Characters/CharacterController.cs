@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Characters
 {
-    public class CharacterController : IDamagable
+    public class CharacterController : IDamageable
     {
         public ScriptableCharacter characterDefinition;
         public int CurrentHealth { get; private set; }
