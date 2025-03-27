@@ -35,7 +35,7 @@ namespace StarterAssets
 
 		public void OnFire(InputValue value)
 		{
-			FireInput(value.Get<bool>());
+			FireInput(value.isPressed);
 		}
 #endif
 

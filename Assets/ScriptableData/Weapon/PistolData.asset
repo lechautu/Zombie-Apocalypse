@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: PistolData
   m_EditorClassIdentifier: 
   weaponName: Pistol
-  bulletPrefab: {fileID: 0}
   damage: 20
   fireRate: 0.3
   pelletsPerShot: 1

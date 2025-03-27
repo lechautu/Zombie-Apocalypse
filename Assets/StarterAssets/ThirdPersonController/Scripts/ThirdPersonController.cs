@@ -15,6 +15,10 @@ namespace StarterAssets
     public class ThirdPersonController : MonoBehaviour
     {
         [Header("Player")]
+        [Tooltip("The correct gun-holding position")]
+        public Transform rightHandTarget;
+        public Transform leftHandTarget;
+
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
 
@@ -301,6 +305,25 @@ namespace StarterAssets
                     var index = Random.Range(0, FootstepAudioClips.Length);
                     AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
+            }
+        }
+
+        void OnAnimatorIK(int layerIndex)
+        {
+            if (rightHandTarget != null)
+            {
+                _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+                _animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+                _animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
+                _animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
+            }
+
+            if (leftHandTarget != null)
+            {
+                _animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+                _animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+                _animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandTarget.position);
+                _animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandTarget.rotation);
             }
         }
     }

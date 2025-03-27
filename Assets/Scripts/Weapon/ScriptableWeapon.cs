@@ -7,7 +7,6 @@ namespace Weapon
     public class ScriptableWeapon : ScriptableObject
     {
         public string weaponName;
-        public GameObject bulletPrefab;
         public float damage;
         public float fireRate;
 
