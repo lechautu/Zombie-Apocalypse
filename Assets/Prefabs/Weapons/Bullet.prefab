@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2871734269350632113}
   - component: {fileID: 3021742981028810361}
   - component: {fileID: 5689850184313148325}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,4 +150,4 @@ MonoBehaviour:
   lifetime: 3
   hitMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1

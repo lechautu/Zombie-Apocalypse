@@ -21,7 +21,7 @@ namespace Weapon
             // Pre-instantiate bullets and store them in the queue
             for (int i = 0; i < poolSize; i++)
             {
-                Bullet bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
+                Bullet bullet = Instantiate(bulletPrefab, transform).GetComponent<Bullet>();
                 bullet.gameObject.SetActive(false);
                 bulletQueue.Enqueue(bullet);
             }
@@ -38,7 +38,7 @@ namespace Weapon
             else
             {
                 // If the pool runs out, create a new bullet (optional)
-                Bullet bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
+                Bullet bullet = Instantiate(bulletPrefab, transform).GetComponent<Bullet>();
                 return bullet;
             }
         }

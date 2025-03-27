@@ -15,9 +15,6 @@ namespace StarterAssets
     public class ThirdPersonController : MonoBehaviour
     {
         [Header("Player")]
-        [Tooltip("The correct gun-holding position")]
-        public Transform rightHandTarget;
-        public Transform leftHandTarget;
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
@@ -71,9 +68,7 @@ namespace StarterAssets
 
         // player
         private float _speed;
-        // private float _animationBlend;
         private float _targetRotation = 0.0f;
-        // private float _rotationVelocity;
         private Vector3 _relativeMovement;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
@@ -236,9 +231,6 @@ namespace StarterAssets
                 _speed = targetSpeed;
             }
 
-            // _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            // if (_animationBlend < 0.01f) _animationBlend = 0f;
-
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
             _relativeMovement = Vector3.Lerp(_relativeMovement, transform.InverseTransformDirection(inputDirection * targetSpeed), Time.deltaTime * SpeedChangeRate);
@@ -249,7 +241,6 @@ namespace StarterAssets
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
-                // float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                 // RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
@@ -305,25 +296,6 @@ namespace StarterAssets
                     var index = Random.Range(0, FootstepAudioClips.Length);
                     AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
-            }
-        }
-
-        void OnAnimatorIK(int layerIndex)
-        {
-            if (rightHandTarget != null)
-            {
-                _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-                _animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-                _animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
-                _animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
-            }
-
-            if (leftHandTarget != null)
-            {
-                _animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
-                _animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
-                _animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandTarget.position);
-                _animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandTarget.rotation);
             }
         }
     }

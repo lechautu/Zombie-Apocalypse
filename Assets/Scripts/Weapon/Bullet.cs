@@ -36,7 +36,6 @@ namespace Weapon
                 {
                     damageable.TakeDamage((int)damage);
                 }
-
                 BulletPool.Instance.ReturnBullet(this); // Return bullet to pool
             }
         }
