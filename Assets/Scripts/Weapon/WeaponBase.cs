@@ -9,6 +9,7 @@ namespace Weapon
         public ScriptableWeapon weaponData;
         public Transform muzzlePoint;
         public ParticleSystem muzzleFlash;
+        public AudioSource shootSound;
 
         protected StarterAssetsInputs _input;
         protected bool canShoot = true;

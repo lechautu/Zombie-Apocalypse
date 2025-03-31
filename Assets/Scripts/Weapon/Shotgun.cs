@@ -11,6 +11,7 @@ namespace Weapon
 
             StartCoroutine(FireRateCooldown());
             muzzleFlash.Play();
+            shootSound.Play();
 
             for (int i = 0; i < weaponData.pelletsPerShot; i++)
             {

@@ -16,6 +16,7 @@ namespace Weapon
             StartCoroutine(FireRateCooldown());
             muzzleFlash.Play();
             muzzleLight.enabled = true;
+            shootSound.Play();
             StartCoroutine(MuzzleLightCooldown());
 
             Bullet bullet = BulletPool.Instance.GetBullet();
