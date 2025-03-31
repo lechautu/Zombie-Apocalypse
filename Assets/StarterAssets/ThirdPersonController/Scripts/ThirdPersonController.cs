@@ -139,6 +139,7 @@ namespace StarterAssets
             SmoothLookAtCursor();
             JumpAndGravity();
             GroundedCheck();
+            Swap();
         }
 
 
@@ -297,6 +298,18 @@ namespace StarterAssets
                     var index = Random.Range(0, FootstepAudioClips.Length);
                     AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
+            }
+        }
+
+        private void Swap()
+        {
+            if (_input.swap)
+            {
+                // Swap logic here
+                // For example, you can change the weapon model or switch between different weapons
+                Debug.Log("Weapon swapped!");
+                _input.swap = false; // Reset the swap input
+                _characterController.SwapWeapon(); // Call the SwapWeapon method from the CharacterController
             }
         }
     }

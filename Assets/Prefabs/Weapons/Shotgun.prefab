@@ -260,6 +260,10 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: d926583af90414a699c8b8437571577a, type: 2}
   muzzlePoint: {fileID: 1168003729668997793}
   muzzleFlash: {fileID: 1168003729654843361}
+  leftHandIKTarget: {fileID: 3033457521116863329}
+  rightHandIKTarget: {fileID: 5670967342721419038}
+  leftElbowIKTarget: {fileID: 6433189289109861107}
+  rightElbowIKTarget: {fileID: 5128669693250709973}
 --- !u!1001 &1168003729669396517
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ namespace Weapon
         public float lifetime = 3f;
         public LayerMask hitMask;
         public ParticleSystem hitEffect;
+        public TrailRenderer trail;
 
         private float _speed;
 
@@ -58,6 +59,11 @@ namespace Weapon
         private void ReturnToPool()
         {
             BulletPool.Instance.ReturnBullet(this);
+        }
+
+        void OnDisable()
+        {
+            trail.Clear();
         }
     }
 }

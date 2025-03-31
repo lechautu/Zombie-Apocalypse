@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Weapon
@@ -19,15 +20,12 @@ namespace Weapon
 
         void FirePellet()
         {
-            float spreadX = Random.Range(-weaponData.spreadAngle, weaponData.spreadAngle);
             float spreadY = Random.Range(-weaponData.spreadAngle, weaponData.spreadAngle);
 
-            Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
-
             Bullet bullet = BulletPool.Instance.GetBullet();
-            bullet.transform.SetPositionAndRotation(muzzlePoint.position, muzzlePoint.rotation * spreadRotation);
+            Quaternion rotation = Quaternion.Euler(muzzlePoint.rotation.eulerAngles.x, muzzlePoint.rotation.eulerAngles.y + spreadY, 0);
+            bullet.transform.SetPositionAndRotation(muzzlePoint.position, rotation);
             bullet.SetDamage(weaponData.damage / weaponData.pelletsPerShot);
         }
-
     }
 }

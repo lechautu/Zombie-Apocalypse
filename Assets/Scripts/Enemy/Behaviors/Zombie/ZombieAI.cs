@@ -91,6 +91,8 @@ namespace Enemy.Behaviors
 
         void Update()
         {
+            if (IsDead) return; // Skip update if dead
+            
             _rootNode.Execute();
             if (_hasAnimator)
             {
@@ -110,7 +112,13 @@ namespace Enemy.Behaviors
                 _agent.isStopped = true;
             }
 
-            enabled = false; // Disable the script to stop the AI behavior
+            Invoke(nameof(DisableZombie), 3f); // Wait for the death animation to finish
+            
+        }
+
+        void DisableZombie()
+        {
+            ZombiePool.Instance.ReturnZombie(gameObject); // Return to pool
         }
 
         public void DealDamage()

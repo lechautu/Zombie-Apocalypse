@@ -11,6 +11,7 @@ namespace StarterAssets
 		public Vector2 move;
 		public Vector2 look;
 		public bool fire;
+		public bool swap;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -37,6 +38,11 @@ namespace StarterAssets
 		{
 			FireInput(value.isPressed);
 		}
+
+		public void OnSwap(InputValue value)
+		{
+			SwapInput();
+		}
 #endif
 
 
@@ -54,6 +60,11 @@ namespace StarterAssets
         {
 			this.fire = fire;
         }
+
+		public void SwapInput()
+		{
+			swap = true;
+		}
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
