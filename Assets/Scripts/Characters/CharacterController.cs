@@ -6,10 +6,12 @@ using UnityEngine;
 
 namespace Characters
 {
-    public class CharacterController : IDamageable
+    public class CharacterController : MonoBehaviour, IDamageable
     {
         public ScriptableCharacter characterDefinition;
+        
         public int CurrentHealth { get; private set; }
+        public bool IsDead => CurrentHealth <= 0;        
 
         private void OnEnable()
         {
@@ -18,8 +20,11 @@ namespace Characters
 
         public void TakeDamage(int damage)
         {
+            if (IsDead) return; // Prevent taking damage if already dead
+
             CurrentHealth -= damage;
-            if (CurrentHealth <= 0)
+            Debug.Log($"Current Health: {CurrentHealth}");
+            if (IsDead)
             {
                 CurrentHealth = 0;
                 Die();

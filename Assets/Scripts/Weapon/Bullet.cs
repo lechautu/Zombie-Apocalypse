@@ -9,22 +9,26 @@ namespace Weapon
         private float damage = 10f;
         public float lifetime = 3f;
         public LayerMask hitMask;
+        public ParticleSystem hitEffect;
+
+        private float _speed;
 
         private float _timer;
 
         void OnEnable()
         {
             _timer = 0f;
+            _speed = speed;
         }
 
         void Update()
         {
-            transform.Translate(speed * Time.deltaTime * Vector3.forward);
+            transform.Translate(_speed * Time.deltaTime * Vector3.forward);
 
             _timer += Time.deltaTime;
             if (_timer >= lifetime)
             {
-                BulletPool.Instance.ReturnBullet(this); // Return to pool
+                ReturnToPool(); // Return to pool
             }
         }
 
@@ -34,15 +38,26 @@ namespace Weapon
             {
                 if (other.TryGetComponent<IDamageable>(out var damageable))
                 {
+                    _speed = 0f; // Stop the bullet
                     damageable.TakeDamage((int)damage);
+                    hitEffect.Play();
+                    Invoke(nameof(ReturnToPool), hitEffect.main.duration); // Wait for the effect to finish before returning to pool
                 }
-                BulletPool.Instance.ReturnBullet(this); // Return bullet to pool
+                else
+                {
+                    ReturnToPool();
+                }
             }
         }
 
         public void SetDamage(float weaponDamage)
         {
             damage = weaponDamage;
+        }
+
+        private void ReturnToPool()
+        {
+            BulletPool.Instance.ReturnBullet(this);
         }
     }
 }

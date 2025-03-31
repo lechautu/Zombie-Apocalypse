@@ -16,11 +16,6 @@ namespace Characters.Animation
         public Transform leftHandTarget;   // Left hand grip position
         public Transform leftElbowHint;    // Helps with elbow direction
 
-        [Header("Body Adjustments")]
-        public Transform spineTarget; // Adjust spine manually
-        public Transform spineBone;   // Assign the spine bone from the character rig
-        public float spineRotationSpeed = 5f; // Adjust rotation smoothing
-
         void Start()
         {
             animator = GetComponent<Animator>();
@@ -54,16 +49,6 @@ namespace Characters.Animation
             {
                 animator.SetIKHintPositionWeight(AvatarIKHint.LeftElbow, 1);
                 animator.SetIKHintPosition(AvatarIKHint.LeftElbow, leftElbowHint.position);
-            }
-        }
-
-        void Update()
-        {
-            if (spineBone != null && spineTarget != null)
-            {
-                // Smoothly rotate the spine to match the aim target
-                Quaternion targetRotation = Quaternion.LookRotation(spineTarget.forward, transform.up);
-                spineBone.rotation = Quaternion.Slerp(spineBone.rotation, targetRotation, Time.deltaTime * spineRotationSpeed);
             }
         }
     }

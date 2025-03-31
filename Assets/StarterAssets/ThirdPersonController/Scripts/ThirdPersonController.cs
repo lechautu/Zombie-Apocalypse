@@ -76,11 +76,11 @@ namespace StarterAssets
         // animation IDs
         private int _animIDSpeedX;
         private int _animIDSpeedY;
-        private int _animIDMotionSpeed;
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
+        private Characters.CharacterController _characterController;
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
@@ -126,12 +126,15 @@ namespace StarterAssets
 #endif
 
             AssignAnimationIDs();
+            _characterController = GetComponent<Characters.CharacterController>();
         }
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
-
+            if (_characterController != null && _characterController.IsDead)
+            {
+                return; // Skip update if the character is dead
+            }
             Move();
             SmoothLookAtCursor();
             JumpAndGravity();
@@ -148,7 +151,6 @@ namespace StarterAssets
         {
             _animIDSpeedX = Animator.StringToHash("SpeedX");
             _animIDSpeedY = Animator.StringToHash("SpeedY");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
         private void GroundedCheck()
@@ -259,7 +261,6 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeedX, _relativeMovement.x);
                 _animator.SetFloat(_animIDSpeedY, _relativeMovement.z);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
         }
 
