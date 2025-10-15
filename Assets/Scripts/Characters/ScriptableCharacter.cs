@@ -11,5 +11,6 @@ namespace Characters
 
         [Header("For Enemy AI")]
         public float speed = 5f;
+        public int score;
     }
 }

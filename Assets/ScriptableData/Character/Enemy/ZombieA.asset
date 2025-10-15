@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   speed: 0.4
+  score: 1

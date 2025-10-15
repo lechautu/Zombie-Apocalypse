@@ -9,13 +9,17 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public Characters.CharacterController _playerController;
-    public GameObject gameOverUI;
 
+    [Header("UI Elements")]
+    public GameObject gameOverUI;
     public Slider healthBar;
+    public TMPro.TextMeshProUGUI scoreText;
+
+    private int _score;
 
     void Awake()
     {
-        Instance = this;     
+        Instance = this;
     }
 
     void Start()
@@ -39,7 +43,7 @@ public class GameManager : MonoBehaviour
                 gameOverUI.SetActive(true);
                 Time.timeScale = 0; // Pause the game
             }
-        }  
+        }
     }
 
     public void RestartGame()
@@ -47,5 +51,11 @@ public class GameManager : MonoBehaviour
         // Reload the scene or reset game state
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1; // Resume the game
+    }
+    
+    public void AddScore(int amount)
+    {
+        _score += amount;
+        scoreText.text = "Score: " + _score;
     }
 }

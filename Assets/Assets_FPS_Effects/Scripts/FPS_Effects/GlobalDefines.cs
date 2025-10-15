@@ -36,7 +36,7 @@ public class Globals {
 		INVINCIBLE,
 	};
 
-	public static matID GetMaterialID( PhysicMaterial physMat )
+	public static matID GetMaterialID( PhysicsMaterial physMat )
 	{
 		if ( physMat == null )
 			return matID.CONCRETE;

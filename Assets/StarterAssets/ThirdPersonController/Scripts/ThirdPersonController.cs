@@ -12,7 +12,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : MonoBehaviour, Characters.IAimFacing
     {
         [Header("Player")]
 
@@ -62,6 +62,17 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Header("Aim")]
+        [SerializeField] private LayerMask groundMask = ~0;
+        [SerializeField] private float rotationSmooth = 12f;
+
+        // Parallax config (can be overridden by CharacterController)
+        private float parallaxNear = 2.0f;  // full compensation at/below this distance
+        private float parallaxFar = 8.0f;  // no compensation at/above this distance
+
+        private float _modelYawOffsetDeg = 0f;
+        private Transform _weaponSocket; // side socket (right shoulder/hip, etc.)
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -102,7 +113,6 @@ namespace StarterAssets
             }
         }
 
-
         private void Awake()
         {
             // get a reference to our main camera
@@ -136,7 +146,7 @@ namespace StarterAssets
                 return; // Skip update if the character is dead
             }
             Move();
-            SmoothLookAtCursor();
+            RotateBodyWithParallaxComp();
             JumpAndGravity();
             GroundedCheck();
             Swap();
@@ -182,21 +192,6 @@ namespace StarterAssets
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
-        }
-
-        private void SmoothLookAtCursor()
-        {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition); // Cast ray from camera to cursor
-
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, GroundLayers)) // Check if it hits the ground
-            {
-                Vector3 lookAtPosition = hit.point; // Get the world position of the mouse
-                lookAtPosition.y = transform.position.y; // Keep player rotation only on the Y-axis
-
-                // Smoothly rotate character towards cursor position
-                Quaternion targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSmoothTime);
-            }
         }
 
         private void Move()
@@ -311,6 +306,63 @@ namespace StarterAssets
                 _input.swap = false; // Reset the swap input
                 _characterController.SwapWeapon(); // Call the SwapWeapon method from the CharacterController
             }
+        }
+
+        // IAimFacing
+        public void SetModelYawOffset(float degrees) => _modelYawOffsetDeg = degrees;
+        public void SetWeaponSocket(Transform socket) => _weaponSocket = socket;
+        public void SetParallaxDistances(float near, float far)
+        {
+            parallaxNear = Mathf.Max(0.01f, Mathf.Min(near, far));
+            parallaxFar = Mathf.Max(parallaxNear + 0.01f, far);
+        }
+
+        /// <summary>
+        /// Rotates the main GameObject toward the cursor, adding a distance-based yaw
+        /// correction so a side-mounted weapon points naturally at near targets.
+        /// </summary>
+        private void RotateBodyWithParallaxComp()
+        {
+            if (_mainCamera == null) return;
+
+            var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (!Physics.Raycast(ray, out var hit, 2000f, groundMask)) return;
+
+            // Base yaw from body center
+            Vector3 flatDir = hit.point - transform.position;
+            flatDir.y = 0f;
+            if (flatDir.sqrMagnitude < 1e-6f) return;
+
+            float dist = new Vector2(flatDir.x, flatDir.z).magnitude;
+
+            // Compute parallax angle only if we have a socket (side-mounted)
+            float parallaxDeg = 0f;
+            if (_weaponSocket != null)
+            {
+                // Socket lateral offset relative to body in local space (x>0: right, x<0: left)
+                Vector3 socketLocal = transform.InverseTransformPoint(_weaponSocket.position);
+                float sideOffset = socketLocal.x;
+
+                // Angle that would center the side socket on the target at this distance
+                // atan2(opposite=sideOffset, adjacent=dist)
+                parallaxDeg = Mathf.Rad2Deg * Mathf.Atan2(sideOffset, Mathf.Max(dist, 0.001f));
+
+                // Distance-based blending: full at near, none at far
+                // t = 0..1 where 0=near, 1=far => weight = 1 - t
+                float t = Mathf.InverseLerp(parallaxNear, parallaxFar, dist);
+                float weight = 1f - Mathf.Clamp01(t);
+
+                parallaxDeg *= weight;
+            }
+
+            // Compose final rotation:
+            // base look toward cursor (from body center) + parallax yaw + fixed model offset
+            Quaternion look =
+                Quaternion.LookRotation(flatDir.normalized, Vector3.up) *
+                Quaternion.AngleAxis(parallaxDeg, Vector3.up) *
+                Quaternion.AngleAxis(_modelYawOffsetDeg, Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, look, rotationSmooth * Time.deltaTime);
         }
     }
 }

@@ -1097,7 +1097,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8391792548882369513}
-  - {fileID: 5938425338626229590}
   m_Father: {fileID: 5887722915787834662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2678660876506710942
@@ -1284,14 +1283,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3138399239734775682}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.99304014, y: -0.056909967, z: -0.10294554, w: 0.005899688}
-  m_LocalPosition: {x: 0.09108554, y: 0.08811626, z: -0.26085305}
+  m_LocalRotation: {x: 0.0087653445, y: -0.011087055, z: -0.014692772, w: -0.99979216}
+  m_LocalPosition: {x: 0.14078027, y: 1.3419211, z: 0.2119512}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7731808681621953287}
   - {fileID: 8296970491345670158}
-  m_Father: {fileID: 1819718805391921594}
+  m_Father: {fileID: 1499826099288635485}
   m_LocalEulerAnglesHint: {x: 0, y: 191.837, z: 186.56}
 --- !u!1 &3145795209823475937
 GameObject:
@@ -1470,6 +1469,7 @@ GameObject:
   - component: {fileID: 4148293262122280254}
   - component: {fileID: 7716820863226043147}
   - component: {fileID: 2620551110979364826}
+  - component: {fileID: 8037308077404241360}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1493,6 +1493,7 @@ Transform:
   - {fileID: 3681981278758292348}
   - {fileID: 8403481887501861508}
   - {fileID: 2102361491677524421}
+  - {fileID: 5938425338626229590}
   - {fileID: 5978233113391096163}
   - {fileID: 8855149721295166276}
   - {fileID: 1506758845909093208}
@@ -1500,7 +1501,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5485663055832083236
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1514,6 +1515,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -1534,7 +1536,6 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1584,6 +1585,10 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+  rotationSmooth: 12
 --- !u!114 &1750888704049743161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1661,7 +1666,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 6bc1aaf4-b110-4ff7-891e-5b9fe6f32c4d
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5696653603565094219}
@@ -1677,7 +1682,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 2690c379-f54d-45be-a724-414123833eb4
-    m_ActionName: Player/Look[/Mouse/delta,/XInputControllerWindows/rightStick]
+    m_ActionName: 'Player/Look[/Mouse/delta,/XInputControllerWindows/rightStick]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5696653603565094219}
@@ -1693,7 +1698,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 8c4abdf8-4099-493a-aa1a-129acec7c3df
-    m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
+    m_ActionName: 'Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5696653603565094219}
@@ -1709,7 +1714,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 980e881e-182c-404c-8cbf-3d09fdb48fef
-    m_ActionName: Player/Sprint[/Keyboard/leftShift,/XInputControllerWindows/leftTrigger]
+    m_ActionName: 'Player/Sprint[/Keyboard/leftShift,/XInputControllerWindows/leftTrigger]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: e4ce1614-c754-48c1-9103-33130441661f
@@ -1856,6 +1861,43 @@ MonoBehaviour:
   weapons:
   - {fileID: 7928228257103978097}
   - {fileID: 6409822912169703294}
+  yawRoot: {fileID: 0}
+  facingController: {fileID: 5696653603565094219}
+  autoCalibrateYawOffset: 1
+  weaponSocket: {fileID: 5938425338626229590}
+  parallaxNear: 2
+  parallaxFar: 8
+--- !u!114 &8037308077404241360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340351499286935885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d827f30035d9a7343b6e7254c37ba60f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebugAimVisualizer
+  cam: {fileID: 0}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+  rayDistance: 2000
+  enabledAtStart: 1
+  drawWorldMarker: 1
+  drawRayLine: 1
+  drawScreenDot: 1
+  markerSize: 0.2
+  markerColor: {r: 1, g: 0.3, b: 0.1, a: 0.9}
+  billboard: 1
+  customMarkerMesh: {fileID: 0}
+  customMarkerMaterial: {fileID: 0}
+  useSphereIfNoMesh: 0
+  rayColor: {r: 0.2, g: 0.9, b: 1, a: 0.9}
+  rayWidth: 0.02
+  screenDotSize: 6
+  screenDotColor: {r: 1, g: 0.95, b: 0.2, a: 0.95}
 --- !u!1 &4487725618772757788
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,6 +2767,11 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2748,6 +2795,7 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

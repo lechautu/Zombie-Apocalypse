@@ -7,8 +7,6 @@ namespace Weapon
     {
         public override void Shoot()
         {
-            if (!canShoot) return;
-
             StartCoroutine(FireRateCooldown());
             muzzleFlash.Play();
             shootSound.Play();
@@ -27,6 +25,11 @@ namespace Weapon
             Quaternion rotation = Quaternion.Euler(muzzlePoint.rotation.eulerAngles.x, muzzlePoint.rotation.eulerAngles.y + spreadY, 0);
             bullet.transform.SetPositionAndRotation(muzzlePoint.position, rotation);
             bullet.SetDamage(weaponData.damage / weaponData.pelletsPerShot);
+        }
+
+        public override bool CanShoot()
+        {
+            return !isOnCooldown && _input.fire;
         }
     }
 }

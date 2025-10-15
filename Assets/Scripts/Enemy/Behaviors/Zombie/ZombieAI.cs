@@ -113,7 +113,7 @@ namespace Enemy.Behaviors
             }
 
             Invoke(nameof(DisableZombie), 3f); // Wait for the death animation to finish
-            
+            GameManager.Instance.AddScore(characterDefinition.score);
         }
 
         void DisableZombie()

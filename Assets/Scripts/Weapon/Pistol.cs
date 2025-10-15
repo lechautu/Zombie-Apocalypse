@@ -11,8 +11,6 @@ namespace Weapon
 
         public override void Shoot()
         {
-            if (!canShoot) return;
-
             StartCoroutine(FireRateCooldown());
             muzzleFlash.Play();
             muzzleLight.enabled = true;
@@ -28,6 +26,11 @@ namespace Weapon
         {
             yield return new WaitForSeconds(0.1f);
             muzzleLight.enabled = false;
+        }
+
+        public override bool CanShoot()
+        {
+            return !isOnCooldown && _input.fire;
         }
     }
 }

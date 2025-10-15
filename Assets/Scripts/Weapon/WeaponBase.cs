@@ -10,21 +10,17 @@ namespace Weapon
         public Transform muzzlePoint;
         public ParticleSystem muzzleFlash;
         public AudioSource shootSound;
+        public Transform weaponForwardRef;
+        public bool isHandledByAI;
 
         protected StarterAssetsInputs _input;
-        protected bool canShoot = true;
+        protected bool isOnCooldown;
 
         //IK target left/right hands and elbows
         public Transform leftHandIKTarget;
         public Transform rightHandIKTarget;
         public Transform leftElbowIKTarget;
         public Transform rightElbowIKTarget;
-
-        void OnEnable()
-        {
-            // Reset the canShoot flag when the weapon is enabled
-            canShoot = true;
-        }
 
         void Start()
         {
@@ -34,19 +30,20 @@ namespace Weapon
 
         void Update()
         {
-            if (_input != null && _input.fire && canShoot)
+            if (CanShoot() && !isHandledByAI)
             {
                 Shoot();
             }
         }
 
         public abstract void Shoot();
+        public abstract bool CanShoot();
 
         protected IEnumerator FireRateCooldown()
         {
-            canShoot = false;
+            isOnCooldown = true;
             yield return new WaitForSeconds(weaponData.fireRate);
-            canShoot = true;
+            isOnCooldown = false;
         }
     }
 }
