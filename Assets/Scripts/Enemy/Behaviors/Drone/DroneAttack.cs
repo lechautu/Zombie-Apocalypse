@@ -25,7 +25,8 @@ namespace Characters.AI
                 return NodeState.Failure;
 
             Transform target = hasTarget.GetTarget().transform;
-            _owner.LookAt(target);
+            Vector3 lookAtPosition = new(target.position.x, target.position.y + 0.5f, target.position.z);
+            _owner.LookAt(lookAtPosition);
 
             // In range: perform attack logic here (e.g., reduce health of target if it implements IDamageable)
             if (_droneWeapon.CanShoot())

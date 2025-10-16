@@ -82,7 +82,7 @@ namespace Weapon
                 if (Physics.SphereCast(transform.position, sweepRadius, delta.normalized,
                                        out RaycastHit hit, dist, hitMask, QueryTriggerInteraction.Collide))
                 {
-                    Debug.Log($"Bullet hit: {hit.collider.name}");
+                    // Debug.Log($"Bullet hit: {hit.collider.name}");
                     CustomRayCastHit customHit = new(hit.collider, hit.point, hit.normal);
                     HandleHit(customHit);
                     return;

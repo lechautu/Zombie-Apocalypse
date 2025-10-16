@@ -27,6 +27,7 @@ namespace Characters.AI
 
         public override NodeState Execute()
         {
+            Debug.Log("Drone is looking for enemies...");
             Vector3 origin = _owner.position;
 
             int count = Physics.OverlapSphereNonAlloc(
@@ -39,11 +40,12 @@ namespace Characters.AI
 
             if (count <= 0)
             {
+                Debug.Log("Drone found no enemies in range");
                 return NodeState.Failure;
             }
 
-            var hasTarget = _owner.gameObject != null
-                ? _owner.gameObject.GetComponent<IHasTarget>()
+            var hasTarget = _owner != null
+                ? _owner.GetComponent<IHasTarget>()
                 : null;
 
             if (hasTarget != null)
@@ -69,6 +71,7 @@ namespace Characters.AI
                 }
                 else
                 {
+                    Debug.Log("Drone found no valid targets");
                     hasTarget.SetTarget(null);
                     return NodeState.Failure;
                 }

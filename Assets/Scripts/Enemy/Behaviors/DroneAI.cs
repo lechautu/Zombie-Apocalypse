@@ -25,10 +25,10 @@ namespace Characters.AI
 
         void SetupBehaviorTree()
         {
-            _rootNode = new SequenceNode(new List<BehaviorNode>
+            _rootNode = new SelectorNode(new List<BehaviorNode>
             {
-                new DroneLookForEnemy(5f, LayerMask.GetMask("Enemy"), transform, GetComponent<Weapon.Drone>()),
-                new DroneAttack(transform, GetComponent<Weapon.Drone>())
+                new DroneAttack(transform, GetComponent<Weapon.Drone>()),
+                new DroneLookForEnemy(5f, LayerMask.GetMask("Enemy"), transform, GetComponent<Weapon.Drone>())
             });
         }
     }
