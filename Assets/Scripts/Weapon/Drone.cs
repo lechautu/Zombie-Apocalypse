@@ -7,11 +7,9 @@ using Enemy.Behaviors;
 
 namespace Weapon
 {
-    public class Drone : WeaponBase, IHasTarget
+    public class Drone : WeaponBase
     {
         public Light muzzleLight;
-
-        private ZombieAI _currentTarget;
 
         public override void Shoot()
         {
@@ -34,17 +32,7 @@ namespace Weapon
 
         public override bool CanShoot()
         {
-            return !isOnCooldown && _currentTarget != null && !_currentTarget.IsDead;
-        }
-
-        public void SetTarget(ZombieAI target)
-        {
-            _currentTarget = target;
-        }
-
-        public ZombieAI GetTarget()
-        {
-            return _currentTarget;
+            return !isOnCooldown;
         }
     }
 }

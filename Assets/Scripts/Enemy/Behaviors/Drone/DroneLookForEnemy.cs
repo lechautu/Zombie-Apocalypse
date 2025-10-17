@@ -13,16 +13,13 @@ namespace Characters.AI
         // Non-alloc buffer (kept per-node). Adjust size to your expected max crowd.
         private readonly Collider[] _hits;
         private Transform _owner;
-    
-        private Drone _droneWeapon;
 
-        public DroneLookForEnemy(float detectionRadius, LayerMask enemyLayer, Transform owner, Drone droneWeapon)
+        public DroneLookForEnemy(float detectionRadius, LayerMask enemyLayer, Transform owner)
         {
             _detectionRadius = Mathf.Max(0.01f, detectionRadius);
             _enemyLayer = enemyLayer;
             _hits = new Collider[16];
             _owner = owner;
-            _droneWeapon = droneWeapon;
         }
 
         public override NodeState Execute()

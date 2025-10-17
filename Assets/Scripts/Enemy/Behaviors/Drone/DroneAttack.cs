@@ -7,24 +7,23 @@ namespace Characters.AI
     public sealed class DroneAttack : BehaviorNode
     {
         private Transform _owner;
-        private Drone _droneWeapon;
+        private WeaponBase _droneWeapon;
 
-        public DroneAttack(Transform owner, Drone droneWeapon)
+        private readonly IHasTarget _hasTarget;
+
+        public DroneAttack(Transform owner, WeaponBase droneWeapon, IHasTarget hasTarget)
         {
             _droneWeapon = droneWeapon;
             _owner = owner;
+            _hasTarget = hasTarget;
         }
 
         public override NodeState Execute()
         {
-            var hasTarget = _owner.gameObject != null
-                ? _owner.gameObject.GetComponent<IHasTarget>()
-                : null;
-
-            if (hasTarget == null || hasTarget.GetTarget() == null)
+            if (_hasTarget == null || _hasTarget.GetTarget() == null)
                 return NodeState.Failure;
 
-            Transform target = hasTarget.GetTarget().transform;
+            Transform target = _hasTarget.GetTarget().transform;
             Vector3 lookAtPosition = new(target.position.x, target.position.y + 0.5f, target.position.z);
             _owner.LookAt(lookAtPosition);
 
