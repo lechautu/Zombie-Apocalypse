@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191938513, guid: 6eb08bfc0fd869c47b796c42ada099da, type: 3}
       propertyPath: invertYOutputValue
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 191938513, guid: 6eb08bfc0fd869c47b796c42ada099da, type: 3}
       propertyPath: magnitudeMultiplier

@@ -1,4 +1,5 @@
 using AI.BehaviorTree;
+using ARPG.Core;
 using Characters;
 using UnityEngine;
 
@@ -39,7 +40,10 @@ namespace Enemy.Behaviors
         {
             if (Vector3.Distance(_enemy.position, _player.position) <= 2f)
             {
-                _player.GetComponent<IDamageable>()?.TakeDamage(_damage);
+                _player.GetComponent<Damageable>()?.ApplyHit(new ()
+                {
+                    damage = _damage
+                });
             }
         }
     }

@@ -4,35 +4,29 @@ using Characters;
 using System;
 using Characters.AI;
 using Enemy.Behaviors;
+using GameFx.Core.PoolSystem;
+using GameFx.Core;
 
 namespace Weapon
 {
     public class Drone : WeaponBase
     {
+        [Header("VFX Effects")]
         public Light muzzleLight;
 
-        public override void Shoot()
+        public override void Shoot(EventDispatcher.EventArgs args)
         {
             StartCoroutine(FireRateCooldown());
             muzzleFlash.Play();
             muzzleLight.enabled = true;
             shootSound.Play();
             StartCoroutine(MuzzleLightCooldown());
-
-            Bullet bullet = BulletPool.Instance.GetBullet();
-            bullet.transform.SetPositionAndRotation(muzzlePoint.position, muzzlePoint.rotation);
-            bullet.SetDamage(weaponData.damage);
         }
 
         private IEnumerator MuzzleLightCooldown()
         {
             yield return new WaitForSeconds(0.1f);
             muzzleLight.enabled = false;
-        }
-
-        public override bool CanShoot()
-        {
-            return !isOnCooldown;
         }
     }
 }

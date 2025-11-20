@@ -1,50 +1,107 @@
 using UnityEngine;
 using System.Collections.Generic;
+using GameFx.Core.PoolSystem;
+using GameFx.Core;
+using UnityEngine.AI;
+using System;
+using System.Collections;
 
 namespace Enemy
 {
     public class ZombieSpawner : MonoBehaviour
     {
-        [Header("Spawner Settings")]
-        public List<Transform> spawnPoints;
-
-        [Tooltip("Time in seconds between spawns")]
-        public float spawnInterval = 5f;
-
-        [Tooltip("How many zombies to spawn per wave")]
-        public int zombiesPerWave = 3;
-
-        private float timer;
-
-        void Update()
+        [Serializable]
+        public struct ZombiePrefabEntry
         {
-            timer += Time.deltaTime;
+            public EnemyType type;
+            public GameObject prefab;
+        }
 
-            if (timer >= spawnInterval)
+        [Header("Setup")]
+        [SerializeField] private List<ZombiePrefabEntry> zombiePrefabs;
+        [SerializeField] private float spawnInterval = 0.2f;
+
+        [Header("Spawn Area")]
+        [SerializeField] private float spawnRadius = 15f;
+        [SerializeField] private float navMeshSampleDistance = 3f;
+
+        private Dictionary<EnemyType, GameObject> _prefabMap;
+        private Transform playerTransform;
+
+        private void Awake()
+        {
+            _prefabMap = new Dictionary<EnemyType, GameObject>();
+            foreach (var e in zombiePrefabs)
             {
-                SpawnWave();
-                timer = 0f;
+                _prefabMap[e.type] = e.prefab;
             }
         }
 
-        void SpawnWave()
+        /// <summary>
+        /// Called by DifficultyController to spawn a wave of zombies.
+        /// </summary>
+        public void SpawnWave(WaveConfig wave)
         {
-            if (ZombiePool.Instance == null) return;
+            StartCoroutine(SpawnWaveRoutine(wave));
+        }
 
-            int spawnCount = Mathf.Min(
-                zombiesPerWave,
-                ZombiePool.Instance.maxActiveZombies - ZombiePool.Instance.ActiveZombieCount
-            );
-
-            for (int i = 0; i < spawnCount; i++)
+        private IEnumerator SpawnWaveRoutine(WaveConfig wave)
+        {
+            foreach (var entry in wave.entries)
             {
-                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-                ZombiePool.Instance.GetRandomZombie(spawnPoint.position, spawnPoint.rotation);
+                if (!_prefabMap.TryGetValue(entry.enemyType, out var prefab))
+                {
+                    Debug.LogWarning($"[ZombieSpawner] No prefab mapped for {entry.enemyType}");
+                    continue;
+                }
+
+                for (int i = 0; i < entry.amount; i++)
+                {
+                    SpawnZombie(prefab);
+                    yield return new WaitForSeconds(spawnInterval);
+                }
+            }
+        }
+
+        private void SpawnZombie(GameObject prefab)
+        {
+
+            if (TryGetRandomPosition(out var spawnPos))
+            {
+                var go = ServiceLocator.Get<PoolManager>().GetPool(prefab).GetObject();
+                go.transform.SetPositionAndRotation(spawnPos, Quaternion.identity);
+            }
+        }
+
+        /// <summary>
+        /// Tries to find a random NavMesh position around the player within spawnRadius.
+        /// </summary>
+        private bool TryGetRandomPosition(out Vector3 spawnPosition)
+        {
+            spawnPosition = default;
+
+            // Cache player transform
+            if (playerTransform == null)
+            {
+                var playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                    playerTransform = playerObj.transform;
             }
 
-            // Optional scaling: increase difficulty over time
-            zombiesPerWave++;
-            spawnInterval = Mathf.Max(1f, spawnInterval - 0.1f);
+            if (playerTransform == null)
+                return false;
+
+            float angle = UnityEngine.Random.value * Mathf.PI * 2f;
+            Vector3 direction = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+            Vector3 candidatePosition = playerTransform.position + direction * spawnRadius;
+
+            if (NavMesh.SamplePosition(candidatePosition, out NavMeshHit hit, navMeshSampleDistance, NavMesh.AllAreas))
+            {
+                spawnPosition = hit.position;
+                return true;
+            }
+
+            return false;
         }
     }
 }

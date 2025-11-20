@@ -10,7 +10,7 @@ namespace Characters.AI
     public class DroneAI : MonoBehaviour, IHasTarget
     {
         private BehaviorNode _rootNode;
-        private ZombieAI _currentTarget; 
+        private BaseZombieAI _currentTarget; 
         private WeaponBase _droneWeapon;       
 
         void Start()
@@ -40,12 +40,12 @@ namespace Characters.AI
             });
         }
 
-        public void SetTarget(ZombieAI target)
+        public void SetTarget(BaseZombieAI target)
         {
             _currentTarget = target;
         }
 
-        public ZombieAI GetTarget()
+        public BaseZombieAI GetTarget()
         {
             return _currentTarget;
         }

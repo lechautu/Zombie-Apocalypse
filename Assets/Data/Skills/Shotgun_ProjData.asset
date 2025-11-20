@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec763b2b7402da46860e845040f9961, type: 3}
+  m_Name: Shotgun_ProjData
+  m_EditorClassIdentifier: Assembly-CSharp::ARPG.Combat.ProjectileData
+  prefab: {fileID: 934365322894245407, guid: f8a66c41104952d45a3eed995a431fc8, type: 3}
+  speed: 40
+  gravity: 0
+  lifetime: 3
+  faceVelocity: 1
+  homing: 0
+  homingTurnRateDeg: 360
+  homingMaxRange: 18
+  localMuzzleOffset: {x: 0, y: 0, z: 0}
+  inheritCasterForward: 1
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 128
+  maxPenetration: 1
+  offset: {x: 0, y: 0, z: 0}
+  sweepRadius: 1
+  damage:
+    attackId: 
+    damage: 10
+    hitstun: 0.2
+    hitlag: 0.05
+    knockbackForce: 6

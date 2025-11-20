@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Characters
 {
-    [CreateAssetMenu(fileName = "NewCharacter", menuName = "ScriptableObjects/Character")]
+    [CreateAssetMenu(fileName = "New Character", menuName = "Game/Data/Character")]
     public class ScriptableCharacter : ScriptableObject
     {
         public int maxHealth = 100;

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d241b95f9106f4181f927c6b815cdd, type: 3}
+  m_Name: LevelConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy.ScriptableLevelConfig
+  levelConfigs:
+  - waves:
+    - entries:
+      - enemyType: 0
+        amount: 3
+    - entries:
+      - enemyType: 0
+        amount: 5
+    - entries:
+      - enemyType: 0
+        amount: 7
+  - waves:
+    - entries:
+      - enemyType: 0
+        amount: 3
+      - enemyType: 1
+        amount: 1
+    - entries:
+      - enemyType: 0
+        amount: 5
+      - enemyType: 1
+        amount: 3
+    - entries:
+      - enemyType: 0
+        amount: 5
+      - enemyType: 1
+        amount: 5
+  - waves:
+    - entries:
+      - enemyType: 1
+        amount: 5
+    - entries:
+      - enemyType: 1
+        amount: 10
+    - entries:
+      - enemyType: 1
+        amount: 15

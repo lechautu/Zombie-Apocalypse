@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d53f98c8724dd649bccb3880ae56d44, type: 3}
+  m_Name: Pistol_SkillData
+  m_EditorClassIdentifier: Assembly-CSharp::ARPG.Combat.SkillData
+  skillId: Shoot
+  clip: {fileID: 7400000, guid: ded6c1a159da71146aed0ed52a3d1f4a, type: 3}
+  animatorState: Skill_Generic
+  animatorStateAir: Skill_Generic_Air
+  applyRootMotion: 1
+  canCastWhen: 1
+  cooldown: 0.2
+  melee: {fileID: 0}
+  projectile: {fileID: 11400000, guid: c6f0ab4d197b6c04981500cc411171ff, type: 2}
+  aoe: {fileID: 0}
+  selfBuff: {fileID: 0}
+  defaultSocketHint: {fileID: 0}
+  castSpeed: 1
+  canMoveDuringCast: 1
+  useUpperBodyLayer: 1
+  upperBodyLayerIndex: 1
+  upperBodyState: Skill_UpperBody
+  upperBodySpeedParam: UpperBodySpeedMul

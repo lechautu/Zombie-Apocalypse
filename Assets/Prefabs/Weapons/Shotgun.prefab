@@ -24,8 +24,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729042493419055572}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20838282, y: 0.034103695, z: 0.96438676, w: -0.15928546}
-  m_LocalPosition: {x: -0.0054, y: 0.0381, z: 0.23}
+  m_LocalRotation: {x: -0.1870608, y: -0.89371204, z: 0.11388077, w: -0.39155874}
+  m_LocalPosition: {x: -0.046, y: 0.043, z: 0.063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3852412987150431777}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.12493548, y: -0.07878274, z: -0.85260874, w: 0.50124127}
+  m_LocalRotation: {x: -0.4337533, y: -0.5944856, z: -0.60950756, w: 0.29486537}
   m_LocalPosition: {x: 0.012, y: -0.014, z: -0.075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -238,7 +238,7 @@ Transform:
   m_GameObject: {fileID: 4111590720933905844}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.136, y: -0.06700003, z: -0.558}
+  m_LocalPosition: {x: -0.388, y: 0.097, z: 0.059}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -301,10 +301,14 @@ MonoBehaviour:
   muzzleFlash: {fileID: 1168003729654843361}
   shootSound: {fileID: 214911421417898663}
   weaponForwardRef: {fileID: 1295124347125840410}
+  shootingSkill: {fileID: 11400000, guid: b515e4b0cc0f2f945ac3ac41fc8a8b36, type: 2}
+  isHandledByAI: 0
   leftHandIKTarget: {fileID: 3033457521116863329}
   rightHandIKTarget: {fileID: 5670967342721419038}
   leftElbowIKTarget: {fileID: 6433189289109861107}
   rightElbowIKTarget: {fileID: 5128669693250709973}
+  bulletPrefab: {fileID: 2790000426575863140, guid: 87bb67341cb124b5cbda84d9b916fd9f,
+    type: 3}
 --- !u!1 &7036702928225005009
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +489,38 @@ PrefabInstance:
     - target: {fileID: 400004, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 68595b60d73b80644b722f3bf8317c59, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

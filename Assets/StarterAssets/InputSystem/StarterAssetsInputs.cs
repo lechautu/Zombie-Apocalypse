@@ -1,5 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
 
@@ -10,17 +10,19 @@ namespace StarterAssets
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
-		public bool fire;
-		public bool swap;
+		public bool jump;
+		public bool sprint;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
+#if !UNITY_IOS || !UNITY_ANDROID
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+#endif
 
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -34,15 +36,17 @@ namespace StarterAssets
 			}
 		}
 
-		public void OnFire(InputValue value)
+		public void OnJump(InputValue value)
 		{
-			FireInput(value.isPressed);
+			JumpInput(value.isPressed);
 		}
 
-		public void OnSwap(InputValue value)
+		public void OnSprint(InputValue value)
 		{
-			SwapInput();
+			SprintInput(value.isPressed);
 		}
+#else
+	// old input sys if we do decide to have it (most likely wont)...
 #endif
 
 
@@ -56,15 +60,17 @@ namespace StarterAssets
 			look = newLookDirection;
 		}
 
-        public void FireInput(bool fire)
-        {
-			this.fire = fire;
-        }
-
-		public void SwapInput()
+		public void JumpInput(bool newJumpState)
 		{
-			swap = true;
+			jump = newJumpState;
 		}
+
+		public void SprintInput(bool newSprintState)
+		{
+			sprint = newSprintState;
+		}
+
+#if !UNITY_IOS || !UNITY_ANDROID
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
@@ -75,6 +81,9 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
+
+#endif
+
 	}
 	
 }

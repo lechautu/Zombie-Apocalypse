@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c34918d4dc2fea4ab955474d9a62363, type: 3}
+  m_Name: EnemySpawnerLoader
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnerLoader
+  dependencies: []
+  prefab: {fileID: 3584604921650620658, guid: 9417a98e8028b4348bcdcc84f50fa054, type: 3}

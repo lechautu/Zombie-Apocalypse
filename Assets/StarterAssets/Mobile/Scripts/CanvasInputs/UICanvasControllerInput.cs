@@ -1,12 +1,16 @@
+using ARPG.Core;
 using UnityEngine;
 
 namespace StarterAssets
 {
     public class UICanvasControllerInput : MonoBehaviour
     {
-
         [Header("Output")]
-        public StarterAssetsInputs starterAssetsInputs;
+        public ARPGPlayerInput starterAssetsInputs;
+
+        [Header("Refs")]
+        [SerializeField] GameObject explosiveButton;
+        [SerializeField] GameObject regularBulletButton;
 
         public void VirtualMoveInput(Vector2 virtualMoveDirection)
         {
@@ -17,7 +21,12 @@ namespace StarterAssets
         {
             starterAssetsInputs.LookInput(virtualLookDirection);
         }
-        
-    }
 
+        public void VirtualSwapInput()
+        {
+            starterAssetsInputs.SwapWeapon();
+            regularBulletButton.SetActive(!regularBulletButton.activeSelf);
+            explosiveButton.SetActive(!explosiveButton.activeSelf);
+        }        
+    }
 }

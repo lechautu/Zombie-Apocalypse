@@ -24,7 +24,6 @@ namespace Characters.AI
 
         public override NodeState Execute()
         {
-            Debug.Log("Drone is looking for enemies...");
             Vector3 origin = _owner.position;
 
             int count = Physics.OverlapSphereNonAlloc(
@@ -37,7 +36,6 @@ namespace Characters.AI
 
             if (count <= 0)
             {
-                Debug.Log("Drone found no enemies in range");
                 return NodeState.Failure;
             }
 
@@ -47,13 +45,13 @@ namespace Characters.AI
 
             if (hasTarget != null)
             {
-                ZombieAI nearest = null;
+                BaseZombieAI nearest = null;
                 float nearestSqr = float.MaxValue;
 
                 for (int i = 0; i < count; i++)
                 {
                     var c = _hits[i];
-                    if (c == null || !c.TryGetComponent<ZombieAI>(out var zombieAI) || zombieAI.IsDead) continue;
+                    if (c == null || !c.TryGetComponent<BaseZombieAI>(out var zombieAI) || zombieAI.IsDead) continue;
                     float sqr = (c.transform.position - origin).sqrMagnitude;
                     if (sqr < nearestSqr)
                     {
@@ -63,12 +61,10 @@ namespace Characters.AI
                 }
                 if (nearest != null)
                 {
-                    Debug.Log("Drone found nearest zombie: " + nearest.name);
                     hasTarget.SetTarget(nearest);
                 }
                 else
                 {
-                    Debug.Log("Drone found no valid targets");
                     hasTarget.SetTarget(null);
                     return NodeState.Failure;
                 }
@@ -83,7 +79,7 @@ namespace Characters.AI
     /// </summary>
     public interface IHasTarget
     {
-        void SetTarget(ZombieAI target);
-        ZombieAI GetTarget();
+        void SetTarget(BaseZombieAI target);
+        BaseZombieAI GetTarget();
     }
 }

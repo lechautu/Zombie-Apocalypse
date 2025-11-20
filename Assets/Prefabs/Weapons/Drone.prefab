@@ -432,11 +432,14 @@ MonoBehaviour:
   muzzleFlash: {fileID: 1168003729654843361}
   shootSound: {fileID: 2693828490767654501}
   weaponForwardRef: {fileID: 259254141493589356}
+  shootingSkill: {fileID: 11400000, guid: 50b733b46d6bb19448a5e3cc4a753d08, type: 2}
   isHandledByAI: 1
   leftHandIKTarget: {fileID: 0}
   rightHandIKTarget: {fileID: 0}
   leftElbowIKTarget: {fileID: 0}
   rightElbowIKTarget: {fileID: 0}
+  bulletPrefab: {fileID: 2790000426575863140, guid: 87bb67341cb124b5cbda84d9b916fd9f,
+    type: 3}
   muzzleLight: {fileID: 5090232021973686713}
 --- !u!114 &-7406816704278764717
 MonoBehaviour:

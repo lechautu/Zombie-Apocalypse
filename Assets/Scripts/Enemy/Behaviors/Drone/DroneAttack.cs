@@ -28,11 +28,11 @@ namespace Characters.AI
             _owner.LookAt(lookAtPosition);
 
             // In range: perform attack logic here (e.g., reduce health of target if it implements IDamageable)
-            if (_droneWeapon.CanShoot())
-            {
-                _droneWeapon.Shoot();
-                return NodeState.Success; // Attack succeeded
-            }
+            // if (_droneWeapon.CanShoot())
+            // {
+            //     _droneWeapon.Shoot(null);
+            //     return NodeState.Success; // Attack succeeded
+            // }
 
             return NodeState.Failure; // Target not damageable
         }

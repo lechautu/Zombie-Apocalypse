@@ -1,4 +1,7 @@
+using ARPG.Core;
 using Characters;
+using GameFx.Core;
+using GameFx.Core.PoolSystem;
 using UnityEngine;
 
 namespace Weapon
@@ -30,7 +33,6 @@ namespace Weapon
         public LayerMask hitMask;
         public float damage = 10f;
         public float sweepRadius = 1f; // spherecast radius; small forgiveness vs thin colliders
-        public ParticleSystem hitEffect;
         public TrailRenderer trail;
 
         // runtime
@@ -102,31 +104,26 @@ namespace Weapon
             // transform.position = hit.point;
 
             // Try damage on collider, else its parents (common enemy setup)
-            if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+            if (hit.collider.TryGetComponent<Damageable>(out var damageable))
             {
-                damageable.TakeDamage((int)damage);
+                damageable.ApplyHit(new()
+                {
+                    damage = damage
+                });
             }
             else
             {
-                var parentD = hit.collider.GetComponentInParent<IDamageable>();
+                var parentD = hit.collider.GetComponentInParent<Damageable>();
                 if (parentD != null)
-                    parentD.TakeDamage((int)damage);
+                {
+                    parentD.ApplyHit(new()
+                    {
+                        damage = damage
+                    });
+                }
             }
 
-            // Play VFX (at hit point, oriented to surface normal if available)
-            if (hitEffect != null)
-            {
-                hitEffect.transform.SetPositionAndRotation(
-                    hit.point,
-                    Quaternion.LookRotation(hit.normal != Vector3.zero ? hit.normal : transform.forward)
-                );
-                hitEffect.Play();
-                Invoke(nameof(ReturnToPool), hitEffect.main.duration);
-            }
-            else
-            {
-                ReturnToPool();
-            }
+            ReturnToPool();
         }
 
         public void SetDamage(float weaponDamage)
@@ -136,12 +133,11 @@ namespace Weapon
 
         private void ReturnToPool()
         {
-            BulletPool.Instance.ReturnBullet(this);
+            ServiceLocator.Get<PoolManager>().ReturnToPool(gameObject);
         }
 
         void OnDisable()
         {
-            CancelInvoke(nameof(ReturnToPool));
             if (trail != null) trail.Clear();
         }
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7994251aa72dbb4faba91f0f18483cf, type: 3}
+  m_Name: ScriptablePool
+  m_EditorClassIdentifier: Assembly-CSharp::GameFx.Core.PoolSystem.ScriptablePool
+  gameObjectPools:
+  - prefab: {fileID: 2790000426575863140, guid: 87bb67341cb124b5cbda84d9b916fd9f,
+      type: 3}
+    initialSize: 10
+  - prefab: {fileID: 6560429777291026071, guid: f348cd249a7854dcbb27075cda33378b,
+      type: 3}
+    initialSize: 0
+  - prefab: {fileID: 6560429777291026071, guid: 63af8851e453c40faab8430ba28b39e0,
+      type: 3}
+    initialSize: 0
+  - prefab: {fileID: 100000, guid: ba52805fd6eec8247b4d8496058700d5, type: 3}
+    initialSize: 10
